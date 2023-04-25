@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>English Highlight</title>
+	<style>
+		html,
+		body {
+			margin: 0;
+		}
+
+		#container {
+			width: 100vw;
+			min-width: 460px;
+			max-width: 800px;
+			height: 100vh;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container"></div>
+
+	<script src="sample.text.js"></script>
+	<script src="lang.en-US.js"></script>
+	<script src="theme.visualEnglish.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.37.1/min/vs/loader.min.js"
+		integrity="sha512-A+6SvPGkIN9Rf0mUXmW4xh7rDvALXf/f0VtOUiHlDUSPknu2kcfz1KzLpOJyL2pO+nZS13hhIjLqVgiQExLJrw=="
+		crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script>
+		const monaco_prefix = 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.37.1';
+		require.config({ paths: { vs: monaco_prefix + '/min/vs' } });
+		require(['vs/editor/editor.main'], function () {
+			monaco.languages.register({ id: "en-US" });
+
+			monaco.languages.setMonarchTokensProvider("en-US", lang_en_US);
+			monaco.languages.registerHoverProvider("en-US", langHover_en_US);
+
+			monaco.editor.defineTheme("visualEnglishLight", visualEnglishLight);
+			monaco.editor.defineTheme("visualEnglishDark", visualEnglishDark);
+
+			var editor = monaco.editor.create(document.getElementById('container'), {
+				value: mit_text,
+				theme: "visualEnglishDark",
+				language: 'en-US',
+				wordWrap: 'on',
+			});
+		});
+	</script>
+</body>
+
+</html>
